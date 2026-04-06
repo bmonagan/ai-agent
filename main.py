@@ -12,8 +12,9 @@ if api_key is None:
 client = genai.Client(api_key=api_key)
 
 parser = argparse.ArgumentParser(description="Chatbot")
-parser.add_argument("user_prompt", type=str, help="User prompt")
-content = parser.parse_args()
+parser.add_argument("_user_prompt", type=str, help="User prompt")
+args = parser.parse_args()
+content = args._user_prompt
 response = client.models.generate_content(
     model="gemini-2.5-flash", contents=content)
 
