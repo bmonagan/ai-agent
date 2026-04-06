@@ -1,6 +1,8 @@
-def main():
-    print("Hello from ai-agent!")
+import os
+from dotenv import load_dotenv
 
-
-if __name__ == "__main__":
-    main()
+load_dotenv()
+api_key = os.getenv('GEMINI_API_KEY')
+if api_key is None:
+    raise ValueError("GEMINI_API_KEY is not set in the environment variables.")
+print(f"GEMINI_API_KEY: {api_key}")
