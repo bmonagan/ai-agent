@@ -1,15 +1,16 @@
 import os
-
+from functions.verify_file_path import verify_file_path
 
 def get_files_info(working_directory, directory="."):
-    absolute_working_dir = os.path.abspath(working_directory)
-    absolute_directory = os.path.abspath(os.path.join(absolute_working_dir, directory))
-    target_dir = os.path.normpath(os.path.join(absolute_working_dir, directory))
-    valid_target_dir = os.path.commonpath([absolute_working_dir, target_dir]) == absolute_working_dir
+    valid_target_dir = verify_file_path(working_directory, directory)
+    
+    
     print(f"Result for {directory if directory != "." else 'current directory'}")
     if not valid_target_dir:
         print(f'Error: Cannot list "{directory}" as it is outside the permitted working directory')
         return
+    
+    target_dir = os.path.normpath(os.path.join(os.path.abspath(working_directory), directory))
     
     if not os.path.isdir(target_dir):
         return f'Error: "{directory}" is not a directory'
