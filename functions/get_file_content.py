@@ -3,7 +3,9 @@ from config import MAX_CHARS
 
 def get_file_content(working_directory, file_path):
     absolute_working_dir = os.path.abspath(working_directory)
-    valid_target_dir = os.path.commonpath([absolute_working_dir, file_path]) == absolute_working_dir
+    absolute_directory = os.path.abspath(os.path.join(absolute_working_dir, file_path))
+    target_dir = os.path.normpath(os.path.join(absolute_working_dir, file_path))
+    valid_target_dir = os.path.commonpath([absolute_working_dir, target_dir]) == absolute_working_dir
 
     if not valid_target_dir:
         print(f'Error: Cannot read "{file_path}" as it is outside the permitted working directory')
