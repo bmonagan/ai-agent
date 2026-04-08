@@ -1,5 +1,6 @@
 import os
-from pathlib import Path
+
+
 def get_files_info(working_directory, directory="."):
     absolute_working_dir = os.path.abspath(working_directory)
     absolute_directory = os.path.abspath(os.path.join(absolute_working_dir, directory))
@@ -11,8 +12,8 @@ def get_files_info(working_directory, directory="."):
         return
     
     if not os.path.isdir(target_dir):
-        print(f'Error: "{directory}" is not a directory')
-        return
+        return f'Error: "{directory}" is not a directory'
+        
 
     files_info = []
     for entry in os.listdir(target_dir):
@@ -22,8 +23,7 @@ def get_files_info(working_directory, directory="."):
             "size": os.path.getsize(entry_path),
             "is_directory": os.path.isdir(entry_path),
         }
-        file_info_str = f"  - {file_info['name']}: file_size={file_info['size']} bytes, is_dir={file_info['is_directory']}"
+        file_info_str = f" - {file_info['name']}: file_size={file_info['size']} bytes, is_dir={file_info['is_directory']}"
         files_info.append(file_info_str)
    
-    for info in files_info:
-        print(info)
+    return "\n".join(files_info)
