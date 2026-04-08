@@ -20,7 +20,7 @@ def get_files_info(working_directory, directory="."):
             "size": os.path.getsize(entry_path),
             "is_directory": os.path.isdir(entry_path),
         }
-        file_info_str = f"- {file_info['name']}: file_size={file_info['size']} bytes, is_dir{file_info['is_directory']}"
+        file_info_str = f"- {file_info['name']}: file_size={file_info['size']} bytes, is_dir {file_info['is_directory']}"
         files_info.append(file_info_str)
     print(f"Result for {directory if directory != "." else 'current directory'}")
     for info in files_info:
