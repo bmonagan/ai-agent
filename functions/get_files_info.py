@@ -6,6 +6,8 @@ def get_files_info(working_directory, directory="."):
     print(f"Working Directory: {absolute_working_dir}")
     print(f"Directory: {absolute_directory}")
     print(f"Target Directory: {target_dir}")
-
+    valid_target_dir = os.path.commonpath([absolute_working_dir, target_dir]) == absolute_working_dir
+    if not valid_target_dir:
+        return f'Error: Cannot list "{directory}" as it is outside the permitted working directory'
 
 get_files_info("calculator")
