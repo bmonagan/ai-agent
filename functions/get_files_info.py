@@ -13,7 +13,6 @@ def get_files_info(working_directory, directory="."):
         return f'Error: "{directory}" is not a directory'
 
     files_info = []
-    print(os.listdir(target_dir))
     for entry in os.listdir(target_dir):
         entry_path = os.path.join(target_dir, entry)
         file_info = {
