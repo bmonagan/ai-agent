@@ -5,7 +5,7 @@ get_file_content("calculator", "lorem.txt")
 print("---")
 
 print("Test: read file in subdirectory pkg/__init__.py")
-get_file_content("calculator", "pkg/__init__.py")
+get_file_content("calculator", "pkg/calculator.py")
 print("---")
 
 print("Test: attempt to read file outside working directory /bin/cat")
