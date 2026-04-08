@@ -27,6 +27,3 @@ def get_files_info(working_directory, directory="."):
    
     for info in files_info:
         print(info)
-        
-
-get_files_info("calculator")
