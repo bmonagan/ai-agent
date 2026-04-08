@@ -1,16 +1,14 @@
 import os 
 from config import MAX_CHARS
+from functions.verify_file_path import verify_file_path
 
 def get_file_content(working_directory, file_path):
-    absolute_working_dir = os.path.abspath(working_directory)
-    absolute_directory = os.path.abspath(os.path.join(absolute_working_dir, file_path))
-    abs_file_path = os.path.normpath(os.path.join(absolute_working_dir, file_path))
-    valid_target_dir = os.path.commonpath([absolute_working_dir, abs_file_path]) == absolute_working_dir
+    valid_target_dir = verify_file_path(working_directory, file_path)
 
     if not valid_target_dir:
         return f'Error: Cannot read "{file_path}" as it is outside the permitted working directory'
     
-    
+    abs_file_path = os.path.normpath(os.path.join(os.path.abspath(working_directory), file_path))
     if not os.path.isfile(abs_file_path):
         return f'Error: File not found or is not a regular file: "{file_path}"'
         
