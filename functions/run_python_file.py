@@ -27,9 +27,9 @@ def run_python_file(working_directory, file_path, args=None):
             err = result.stderr
             output = ""
             if out:
-                output += f"Standard Output:\n{out}\n"
+                output += f"'STDOUT:\n{out}\n"
             if err:
-                output += f"Standard Error:\n{err}\n"
+                output += f"STDERR:\n{err}\n"
             return output   
             
     except Exception as e:
