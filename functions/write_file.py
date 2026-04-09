@@ -1,10 +1,11 @@
 import os
 from functions.verify_file_path import verify_file_path
+
 def write_file(working_directory, file_path, content):
     valid_target_dir = verify_file_path(working_directory, file_path)
     if not valid_target_dir:
         return f'Error: Cannot write to "{file_path}" as it is outside the permitted working directory'
-    if os.path.exists(os.path.normpath(os.path.join(os.path.abspath(working_directory), file_path))):
+    if os.path.isdir(os.path.normpath(os.path.join(os.path.abspath(working_directory), file_path))):
         return f'Error: Cannot write to "{file_path}" as it is a directory'
     
     abs_file_path = os.path.normpath(os.path.join(os.path.abspath(working_directory), file_path))
