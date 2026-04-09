@@ -1,4 +1,5 @@
-import os 
+import os
+import subprocess
 from functions.verify_file_path import verify_file_path
 def run_python_file(working_directory, file_path, args=None):
     if not verify_file_path(working_directory, file_path):
@@ -11,3 +12,14 @@ def run_python_file(working_directory, file_path, args=None):
     command = ["python", absolute_file_path]
     if args:
         command.extend(args)
+
+    try:
+        result = subprocess.run(command, capture_output=True, text=True, cwd=working_directory)
+        if result.returncode != 0:
+            outputError = f'"Process exited with code X: {result.returncode}'
+            if not result.stdout.strip() and not result.stderr.strip():
+                outputError += "No output produced"
+            return outputError
+    except Exception as e:
+        return f"Error: executing Python file: {e}"
+    
