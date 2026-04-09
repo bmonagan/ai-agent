@@ -16,9 +16,9 @@ def run_python_file(working_directory, file_path, args=None):
             command.extend(args)
 
     
-        result = subprocess.run(command, capture_output=True, text=True, cwd=working_directory)
+        result = subprocess.run(command, capture_output=True, text=True, cwd=working_directory, timeout=30)
         if result.returncode != 0:
-            outputError = f'"Process exited with code X: {result.returncode}'
+            outputError = f'Process exited with code: {result.returncode}'
             if not result.stdout.strip() and not result.stderr.strip():
                 outputError += "No output produced"
             return outputError
