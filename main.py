@@ -3,8 +3,9 @@ import argparse
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
-
+from prompts import system_prompt, model_name
 load_dotenv()
+
 api_key = os.getenv('GEMINI_API_KEY')
 if api_key is None:
     raise ValueError("GEMINI_API_KEY is not set in the environment variables.")
@@ -22,8 +23,10 @@ messages = [types.Content(role="user", parts=[types.Part(text=args.user_prompt)]
 
 # Generate content using the specified model and the user prompt
 response = client.models.generate_content(
-    model="gemini-2.5-flash", contents=messages)
-
+    model=model_name,
+    contents=messages,
+    config=types.GenerateContentConfig(system_instruction=system_prompt),
+)
 
 # Check if usage metadata is available in the response and print token counts
 if not response.usage_metadata:
