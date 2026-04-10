@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 from prompts import system_prompt, model_name
+from functions.call_function import available_functions
 load_dotenv()
 
 api_key = os.getenv('GEMINI_API_KEY')
@@ -25,7 +26,9 @@ messages = [types.Content(role="user", parts=[types.Part(text=args.user_prompt)]
 response = client.models.generate_content(
     model=model_name,
     contents=messages,
-    config=types.GenerateContentConfig(system_instruction=system_prompt),
+    config=types.GenerateContentConfig
+    (tools = [available_functions],
+    system_instruction=system_prompt),
 )
 
 # Check if usage metadata is available in the response and print token counts
