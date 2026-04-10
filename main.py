@@ -39,5 +39,9 @@ else:
         print(f"User prompt: {content}")
         print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
         print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
-    print("Response:")
-    print(response.text)
+    if response.function_calls:
+        print("Function calls made by the model:")
+        for function_call in response.function_calls:
+            f"Calling function: {function_call.name}({function_call.args})"
+    else:
+        print(response.text)
