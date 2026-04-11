@@ -39,5 +39,17 @@ def call_function(function_call: types.FunctionCall, verbose=False, working_dire
                 name=function_name,
                 response={"error": f"Unknown function: {function_name}"},
         )
+    ])
+    args = dict(function_call.args) if function_call.args else {}
+    args[working_directory] = "./calculator" 
+    function_result = available_functions_dict[function_name](**args)
+    return types.Content(
+    role="tool",
+    parts=[
+        types.Part.from_function_response(
+            name=function_name,
+            response={"result": function_result},
+        )
     ],
 )
+
