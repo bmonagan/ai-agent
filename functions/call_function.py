@@ -41,7 +41,7 @@ def call_function(function_call: types.FunctionCall, verbose=False, working_dire
         )
     ])
     args = dict(function_call.args) if function_call.args else {}
-    args[working_directory] = "./calculator" 
+    args["working_directory"] = "./calculator" 
     function_result = available_functions_dict[function_name](**args)
     return types.Content(
     role="tool",
