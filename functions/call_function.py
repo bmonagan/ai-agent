@@ -30,3 +30,14 @@ def call_function(function_call: types.FunctionCall, verbose=False, working_dire
         print(f"Calling function: {function_call.name}({function_call.args})")
     else:
         print(f" - Calling function: {function_call.name}")
+    function_name = function_call.name if function_call.name else ""
+    if function_name not in available_functions_dict:
+        return types.Content(
+    role="tool",
+    parts=[
+        types.Part.from_function_response(
+            name=function_name,
+            response={"error": f"Unknown function: {function_name}"},
+        )
+    ],
+)
