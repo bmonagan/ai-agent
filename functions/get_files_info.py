@@ -5,8 +5,6 @@ from google.genai import types
 def get_files_info(working_directory, directory="."):
     valid_target_dir = verify_file_path(working_directory, directory)
     
-    
-    print(f"Result for {directory if directory != "." else 'current directory'}")
     if not valid_target_dir:
         print(f'Error: Cannot list "{directory}" as it is outside the permitted working directory')
         return
