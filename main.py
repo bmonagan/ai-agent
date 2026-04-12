@@ -32,9 +32,6 @@ for _ in range(20):
         (tools = [available_functions],
         system_instruction=system_prompt),
     )
-    if response.candidates:
-        for candidate in response.candidates:
-            messages.append(types.Content(role="model", parts=list(candidate.parts)))
     # Check if usage metadata is available in the response and print token counts
     if not response.usage_metadata:
         print("No usage metadata found in the response.")
@@ -43,7 +40,9 @@ for _ in range(20):
             print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
             print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
         if response.function_calls and len(response.function_calls) > 0:
-            messages.append(types.Content(role="model", parts=list(response.parts)))
+            candidate = response.candidates[0] if response.candidates else None
+            parts = list(candidate.content.parts) if candidate and candidate.content and candidate.content.parts else []
+            messages.append(types.Content(role="model", parts=parts))
             function_call_result = call_function(response.function_calls[0], verbose=args.verbose)
             if not function_call_result.parts or not function_call_result.parts[0].function_response:
                 raise Exception("No function response found in the function call result.")
