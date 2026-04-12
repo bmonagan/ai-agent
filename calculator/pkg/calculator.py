@@ -9,24 +9,43 @@ class Calculator:
             "/": lambda a, b: a / b,
         }
         self.precedence = {
-            "+": 3,
+            "+": 1,
             "-": 1,
             "*": 2,
             "/": 2,
+            "(": 0,  # Lower precedence for parentheses
+            ")": 0,
         }
 
     def evaluate(self, expression):
         if not expression or expression.isspace():
             return None
-        tokens = expression.strip().split()
+        # Use a more robust tokenization that handles parentheses
+        tokens = self._tokenize(expression)
         return self._evaluate_infix(tokens)
+
+    def _tokenize(self, expression):
+        # This will separate operators, numbers, and parentheses
+        # while keeping them as individual tokens.
+        import re
+        return [token for token in re.findall(r'\d+\.?\d*|[-+*/()]', expression) if token.strip()]
+
 
     def _evaluate_infix(self, tokens):
         values = []
         operators = []
 
         for token in tokens:
-            if token in self.operators:
+            if token == '(':
+                operators.append(token)
+            elif token == ')':
+                while operators and operators[-1] != '(':
+                    self._apply_operator(operators, values)
+                if operators and operators[-1] == '(':
+                    operators.pop()  # Pop the opening parenthesis
+                else:
+                    raise ValueError("Mismatched parentheses")
+            elif token in self.operators:
                 while (
                     operators
                     and operators[-1] in self.operators
